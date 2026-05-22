@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UIKit — Component Library + Real-time UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css" />
+<link rel="stylesheet" href="advancestyle.css" />
+</head>
+<body>
+
+<!-- TOAST HOST -->
+<div id="toast-host" role="alert" aria-live="polite"></div>
+
+<div class="app">
+
+  <!-- ══════════ SIDEBAR ══════════ -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon"><i class="ti ti-components"></i></div>
+      <div class="logo-text">UI<span>Kit</span></div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-label">Components</div>
+      <div class="nav-item active" onclick="switchTab(this,'buttons')">
+        <i class="ti ti-cursor-text"></i> Buttons
+      </div>
+      <div class="nav-item" onclick="switchTab(this,'cards')">
+        <i class="ti ti-layout-cards"></i> Cards
+      </div>
+      <div class="nav-item" onclick="switchTab(this,'inputs')">
+        <i class="ti ti-forms"></i> Inputs
+      </div>
+      <div class="nav-item" onclick="switchTab(this,'toasts')">
+        <i class="ti ti-bell"></i> Toasts
+        <span class="nav-badge" id="sidebar-notif-count" style="display:none">0</span>
+      </div>
+      <div class="nav-item" onclick="switchTab(this,'docs')">
+        <i class="ti ti-book-2"></i> Documentation
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-label">Real-time</div>
+      <div class="nav-item" onclick="switchTab(this,'realtime')">
+        <i class="ti ti-activity"></i> Live Panel
+        <span class="nav-dot"></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ══════════ MAIN ══════════ -->
+  <div class="main">
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="btn btn-ghost btn-icon btn-sm mobile-menu" onclick="document.getElementById('sidebar').classList.toggle('open')" aria-label="Menu">
+          <i class="ti ti-menu-2"></i>
+        </button>
+        <i class="ti ti-chevron-right" style="font-size:13px;color:var(--ink3)"></i>
+        <span class="page-crumb" id="topbar-crumb">Buttons</span>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-search">
+          <i class="ti ti-search" style="font-size:15px;flex-shrink:0"></i>
+          <input type="text" placeholder="Search…" oninput="handleSearch(this.value)" />
+        </div>
+        <button class="btn btn-sm" onclick="fireToast('info','Theme','Dark mode active.')">
+          <i class="ti ti-moon"></i>
+        </button>
+        <button class="btn btn-sm btn-primary" onclick="fireToast('success','Saved!','All changes saved.')">
+          <i class="ti ti-device-floppy"></i> Save
+        </button>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="content">
+
+      <!-- ─── BUTTONS PANEL ─── -->
+      <section class="panel active" id="panel-buttons">
+        <div class="page-header">
+          <div class="page-title">Buttons</div>
+          <div class="page-desc">Interactive button components — variants, sizes, states, and groups.</div>
+        </div>
+
+        <div class="section-head">Variants</div>
+        <div class="row">
+          <button class="btn btn-primary"><i class="ti ti-check"></i> Primary</button>
+          <button class="btn"><i class="ti ti-settings"></i> Default</button>
+          <button class="btn btn-success"><i class="ti ti-circle-check"></i> Success</button>
+          <button class="btn btn-danger"><i class="ti ti-trash"></i> Danger</button>
+          <button class="btn btn-warning"><i class="ti ti-alert-triangle"></i> Warning</button>
+          <button class="btn btn-outline"><i class="ti ti-star"></i> Outline</button>
+          <button class="btn btn-ghost"><i class="ti ti-dots"></i> Ghost</button>
+        </div>
+
+        <div class="section-head">Sizes</div>
+        <div class="row" style="align-items:center">
+          <button class="btn btn-lg btn-primary">Large</button>
+          <button class="btn btn-primary">Default</button>
+          <button class="btn btn-sm btn-primary">Small</button>
+          <button class="btn btn-icon"><i class="ti ti-settings"></i></button>
+          <button class="btn btn-icon btn-sm btn-primary"><i class="ti ti-plus"></i></button>
+        </div>
+
+        <div class="section-head">Button Group</div>
+        <div class="row">
+          <div class="btn-group">
+            <button class="btn"><i class="ti ti-align-left"></i></button>
+            <button class="btn"><i class="ti ti-align-center"></i></button>
+            <button class="btn"><i class="ti ti-align-right"></i></button>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-primary">Export</button>
+            <button class="btn btn-primary btn-icon"><i class="ti ti-chevron-down"></i></button>
+          </div>
+        </div>
+
+        <div class="section-head">States</div>
+        <div class="row">
+          <button class="btn btn-primary" disabled><i class="ti ti-lock"></i> Disabled</button>
+          <button class="btn btn-primary btn-loading" id="load-demo">Processing</button>
+          <button class="btn" onclick="triggerLoad()"><i class="ti ti-refresh"></i> Trigger Load</button>
+        </div>
+
+        <div class="section-head">With Icon combos</div>
+        <div class="row">
+          <button class="btn btn-primary" onclick="fireToast('success','Saved!','Document saved successfully.')">
+            <i class="ti ti-device-floppy"></i> Save document
+          </button>
+          <button class="btn btn-danger" onclick="fireToast('danger','Deleted','Item permanently removed.')">
+            <i class="ti ti-trash"></i> Delete
+          </button>
+          <button class="btn" onclick="fireToast('info','Copied!','Link copied to clipboard.')">
+            <i class="ti ti-copy"></i> Copy link
+          </button>
+          <button class="btn btn-success" onclick="fireToast('success','Deployed!','v2.5.1 is now live.')">
+            <i class="ti ti-rocket"></i> Deploy
+          </button>
+        </div>
+      </section>
+
+      <!-- ─── CARDS PANEL ─── -->
+      <section class="panel" id="panel-cards">
+        <div class="page-header">
+          <div class="page-title">Cards</div>
+          <div class="page-desc">Flexible containers for content, media, data, and actions.</div>
+        </div>
+
+        <div class="section-head">Basic cards</div>
+        <div class="grid3">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Simple card</div>
+                <div class="card-subtitle">With header and footer</div>
+              </div>
+              <span class="badge badge-accent">New</span>
+            </div>
+            <div class="card-body">A clean card component for grouping related information with clear visual hierarchy.</div>
+            <div class="card-footer">
+              <button class="btn btn-sm btn-primary">Action</button>
+              <button class="btn btn-sm btn-ghost">Cancel</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-media"><i class="ti ti-photo"></i></div>
+            <div class="card-title" style="margin-bottom:6px">Media card</div>
+            <div class="card-body">Cards support image/media areas at the top with descriptive text below.</div>
+            <div class="card-footer">
+              <span class="badge badge-green"><i class="ti ti-circle-check"></i> Live</span>
+              <button class="btn btn-sm" style="margin-left:auto"><i class="ti ti-external-link"></i> View</button>
+            </div>
+          </div>
+
+          <div class="card card-elevated">
+            <div class="card-header">
+              <div class="card-title">Interactive card</div>
+              <i class="ti ti-sparkles" style="color:var(--purple);font-size:18px"></i>
+            </div>
+            <div class="card-body">Hover to see the elevation effect. Cards can be clickable or contain actions.</div>
+            <div class="card-footer">
+              <span class="badge badge-purple">Featured</span>
+              <span class="badge badge-neutral" style="margin-left:auto">v2.0</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-head">Stat cards</div>
+        <div class="grid3">
+          <div class="stat-card">
+            <div class="stat-label"><i class="ti ti-users" style="font-size:13px"></i> Active Users</div>
+            <div class="stat-value" id="stat-users">4,821</div>
+            <div class="stat-delta up"><i class="ti ti-trending-up"></i> +12.4% this week</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label"><i class="ti ti-currency-dollar" style="font-size:13px"></i> Revenue</div>
+            <div class="stat-value" id="stat-rev">$38.2k</div>
+            <div class="stat-delta up"><i class="ti ti-trending-up"></i> +8.1% vs last month</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label"><i class="ti ti-alert-circle" style="font-size:13px"></i> Error Rate</div>
+            <div class="stat-value" id="stat-err">0.3%</div>
+            <div class="stat-delta down"><i class="ti ti-trending-down"></i> +0.1% spike today</div>
+          </div>
+        </div>
+
+        <div class="section-head">Profile card</div>
+        <div class="card" style="display:flex;align-items:center;gap:16px;max-width:460px">
+          <div class="avatar" style="width:50px;height:50px;font-size:16px">AJ</div>
+          <div style="flex:1">
+            <div class="card-title">Alex Johnson</div>
+            <div class="card-subtitle">Senior Engineer · San Francisco</div>
+          </div>
+          <span class="badge badge-green">Online</span>
+          <button class="btn btn-sm btn-icon"><i class="ti ti-mail"></i></button>
+          <button class="btn btn-sm btn-icon"><i class="ti ti-dots-vertical"></i></button>
+        </div>
+
+        <div class="section-head">Badges</div>
+        <div class="row">
+          <span class="badge badge-accent"><i class="ti ti-info-circle"></i> Info</span>
+          <span class="badge badge-green"><i class="ti ti-check"></i> Success</span>
+          <span class="badge badge-red"><i class="ti ti-x"></i> Error</span>
+          <span class="badge badge-yellow"><i class="ti ti-alert-triangle"></i> Warning</span>
+          <span class="badge badge-purple"><i class="ti ti-sparkles"></i> Premium</span>
+          <span class="badge badge-neutral">Neutral</span>
+        </div>
+      </section>
+
+      <!-- ─── INPUTS PANEL ─── -->
+      <section class="panel" id="panel-inputs">
+        <div class="page-header">
+          <div class="page-title">Inputs</div>
+          <div class="page-desc">Form elements — text, select, textarea, toggles, ranges, radios, checkboxes.</div>
+        </div>
+
+        <div class="grid2">
+          <div>
+            <div class="section-head">Text inputs</div>
+            <div class="field">
+              <label class="field-label">Full name</label>
+              <div class="inp-wrap">
+                <i class="ti ti-user inp-icon"></i>
+                <input class="inp" type="text" placeholder="John Doe">
+              </div>
+            </div>
+            <div class="field">
+              <label class="field-label">Email address</label>
+              <div class="inp-wrap">
+                <i class="ti ti-mail inp-icon"></i>
+                <input class="inp success" type="email" value="alex@example.com">
+              </div>
+              <span class="field-hint" style="color:var(--green)"><i class="ti ti-check" style="font-size:12px"></i> Valid email</span>
+            </div>
+            <div class="field">
+              <label class="field-label">Username <span style="color:var(--red)">*</span></label>
+              <input class="inp error" type="text" value="taken_user">
+              <span class="field-error"><i class="ti ti-alert-circle"></i> This username is already taken</span>
+            </div>
+            <div class="field">
+              <label class="field-label">Password</label>
+              <div class="inp-wrap">
+                <i class="ti ti-lock inp-icon"></i>
+                <input class="inp" type="password" placeholder="••••••••">
+                <span class="inp-suffix" style="cursor:pointer;font-size:16px"><i class="ti ti-eye"></i></span>
+              </div>
+            </div>
+            <div class="field">
+              <label class="field-label">Search</label>
+              <div class="inp-group">
+                <input class="inp" type="search" placeholder="Search components…">
+                <button class="btn btn-primary"><i class="ti ti-search"></i></button>
+              </div>
+            </div>
+            <div class="field">
+              <label class="field-label">Notes</label>
+              <textarea class="inp" placeholder="Write something…" style="height:80px"></textarea>
+              <span class="field-hint">Max 500 characters</span>
+            </div>
+          </div>
+
+          <div>
+            <div class="section-head">Select</div>
+            <div class="field">
+              <label class="field-label">Framework</label>
+              <select class="inp">
+                <option>React</option>
+                <option>Vue</option>
+                <option>Svelte</option>
+                <option>Angular</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field-label">Region</label>
+              <select class="inp">
+                <option>US East</option>
+                <option>US West</option>
+                <option>EU Central</option>
+                <option>AP South</option>
+              </select>
+            </div>
+
+            <div class="section-head">Toggles</div>
+            <div class="toggle-row">
+              <label class="toggle">
+                <input type="checkbox" checked>
+                <span class="toggle-track"></span>
+              </label>
+              <div>
+                <div class="toggle-label">Enable notifications</div>
+                <div class="toggle-sub">Push + email alerts</div>
+              </div>
+            </div>
+            <div class="toggle-row">
+              <label class="toggle">
+                <input type="checkbox">
+                <span class="toggle-track"></span>
+              </label>
+              <div class="toggle-label">Auto-save drafts</div>
+            </div>
+            <div class="toggle-row">
+              <label class="toggle">
+                <input type="checkbox" checked>
+                <span class="toggle-track"></span>
+              </label>
+              <div class="toggle-label">Two-factor authentication</div>
+            </div>
+
+            <div class="section-head">Ranges</div>
+            <div class="field">
+              <label class="field-label">Volume</label>
+              <div class="range-row">
+                <i class="ti ti-volume" style="color:var(--ink3);font-size:16px"></i>
+                <input type="range" min="0" max="100" value="65" step="1"
+                  oninput="this.nextElementSibling.textContent=this.value+'%'">
+                <span class="range-val">65%</span>
+              </div>
+            </div>
+            <div class="field">
+              <label class="field-label">Quality</label>
+              <div class="range-row">
+                <i class="ti ti-adjustments-horizontal" style="color:var(--ink3);font-size:16px"></i>
+                <input type="range" min="0" max="100" value="80" step="1"
+                  oninput="this.nextElementSibling.textContent=this.value+'%'">
+                <span class="range-val">80%</span>
+              </div>
+            </div>
+
+            <div class="section-head">Checkboxes</div>
+            <label class="check-item">
+              <input type="checkbox" checked> <span>Accept terms and conditions</span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox"> <span>Subscribe to newsletter</span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" checked> <span>Enable analytics tracking</span>
+            </label>
+
+            <div class="section-head">Radio group</div>
+            <div class="radio-group">
+              <label class="radio-item selected" onclick="selectRadio(this)">
+                <input type="radio" name="plan" checked> <span style="font-size:13.5px;font-weight:500">Free — $0/mo</span>
+              </label>
+              <label class="radio-item" onclick="selectRadio(this)">
+                <input type="radio" name="plan"> <span style="font-size:13.5px;font-weight:500">Pro — $12/mo</span>
+              </label>
+              <label class="radio-item" onclick="selectRadio(this)">
+                <input type="radio" name="plan"> <span style="font-size:13.5px;font-weight:500">Team — $49/mo</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── TOASTS PANEL ─── -->
+      <section class="panel" id="panel-toasts">
+        <div class="page-header">
+          <div class="page-title">Toasts</div>
+          <div class="page-desc">Auto-dismissing notifications with types, progress bars, and custom content.</div>
+        </div>
+
+        <div class="section-head">Quick fire</div>
+        <div class="row">
+          <button class="btn btn-success" onclick="fireToast('success','Success!','Operation completed successfully.')">
+            <i class="ti ti-circle-check"></i> Success
+          </button>
+          <button class="btn btn-danger" onclick="fireToast('danger','Error','Something went wrong. Please try again.')">
+            <i class="ti ti-circle-x"></i> Error
+          </button>
+          <button class="btn btn-warning" onclick="fireToast('warning','Warning','Your session expires in 5 minutes.')">
+            <i class="ti ti-alert-triangle"></i> Warning
+          </button>
+          <button class="btn btn-primary" onclick="fireToast('info','Info','3 new updates are available.')">
+            <i class="ti ti-info-circle"></i> Info
+          </button>
+        </div>
+
+        <div class="section-head">Custom toast builder</div>
+        <div class="grid2">
+          <div>
+            <div class="field">
+              <label class="field-label">Title</label>
+              <input class="inp" id="ct-title" type="text" value="Custom notification">
+            </div>
+            <div class="field">
+              <label class="field-label">Message</label>
+              <input class="inp" id="ct-msg" type="text" value="This is your custom toast message!">
+            </div>
+            <div class="field">
+              <label class="field-label">Type</label>
+              <select class="inp" id="ct-type">
+                <option value="info">Info</option>
+                <option value="success">Success</option>
+                <option value="warning">Warning</option>
+                <option value="danger">Error</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field-label">Duration (ms)</label>
+              <div class="range-row">
+                <input type="range" id="ct-dur" min="2000" max="8000" value="4000" step="500"
+                  oninput="document.getElementById('ct-dur-val').textContent=(this.value/1000).toFixed(1)+'s'">
+                <span class="range-val" id="ct-dur-val">4.0s</span>
+              </div>
+            </div>
+            <button class="btn btn-primary" onclick="fireCustomToast()">
+              <i class="ti ti-send"></i> Fire Toast
+            </button>
+          </div>
+          <div class="card" style="font-size:13.5px;color:var(--ink2);line-height:1.7">
+            <div class="card-title" style="margin-bottom:10px;display:flex;align-items:center;gap:8px">
+              <i class="ti ti-code" style="color:var(--accent)"></i> API
+            </div>
+            Toasts appear bottom-right, auto-dismiss after the set duration, and show a shrinking progress bar. Stack multiple toasts — each queues and fades independently.
+            <div class="code-block"><span class="kw">fireToast</span>(<span class="str">'success'</span>, <span class="str">'Title'</span>, <span class="str">'Message'</span>, <span class="cm">4000</span>);
+
+<span class="cm">// Types: success | danger | warning | info</span>
+<span class="cm">// Duration: milliseconds (default 4000)</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── DOCS PANEL ─── -->
+      <section class="panel" id="panel-docs">
+        <div class="page-header">
+          <div class="page-title">Documentation</div>
+          <div class="page-desc">Complete API reference, props, and usage examples for all components.</div>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-card-head"><i class="ti ti-cursor-text"></i> Button</div>
+          <div class="doc-card-body">
+            <table class="prop-table">
+              <thead><tr><th>Prop / Class</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+              <tbody>
+                <tr><td>.btn-primary</td><td>class</td><td>—</td><td>Blue filled button</td></tr>
+                <tr><td>.btn-danger</td><td>class</td><td>—</td><td>Red tinted button</td></tr>
+                <tr><td>.btn-success</td><td>class</td><td>—</td><td>Green tinted button</td></tr>
+                <tr><td>.btn-ghost</td><td>class</td><td>—</td><td>Transparent, no border</td></tr>
+                <tr><td>.btn-outline</td><td>class</td><td>—</td><td>Accent border, transparent bg</td></tr>
+                <tr><td>.btn-sm / .btn-lg</td><td>class</td><td>md</td><td>Size variants</td></tr>
+                <tr><td>.btn-icon</td><td>class</td><td>—</td><td>Square icon-only button</td></tr>
+                <tr><td>.btn-loading</td><td>class</td><td>—</td><td>Spinner overlay state</td></tr>
+                <tr><td>disabled</td><td>attr</td><td>false</td><td>Disable all interaction</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-card-head"><i class="ti ti-layout-cards"></i> Card</div>
+          <div class="doc-card-body">
+            <div class="code-block"><span class="cm">&lt;!-- Basic card --&gt;</span>
+<span class="kw">&lt;div</span> class=<span class="str">"card"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;div</span> class=<span class="str">"card-header"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;div</span> class=<span class="str">"card-title"</span><span class="kw">&gt;</span>Title<span class="kw">&lt;/div&gt;</span>
+    <span class="kw">&lt;span</span> class=<span class="str">"badge badge-accent"</span><span class="kw">&gt;</span>Tag<span class="kw">&lt;/span&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+  <span class="kw">&lt;div</span> class=<span class="str">"card-body"</span><span class="kw">&gt;</span>Content…<span class="kw">&lt;/div&gt;</span>
+  <span class="kw">&lt;div</span> class=<span class="str">"card-footer"</span><span class="kw">&gt;</span>Actions<span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;/div&gt;</span></div>
+          </div>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-card-head"><i class="ti ti-forms"></i> Input</div>
+          <div class="doc-card-body">
+            <table class="prop-table">
+              <thead><tr><th>Class</th><th>Element</th><th>Description</th></tr></thead>
+              <tbody>
+                <tr><td>.inp</td><td>input / textarea / select</td><td>Base styled input</td></tr>
+                <tr><td>.inp.error</td><td>input</td><td>Red border + error ring on focus</td></tr>
+                <tr><td>.inp.success</td><td>input</td><td>Green border + success ring</td></tr>
+                <tr><td>.inp-wrap</td><td>div</td><td>Wrapper for prefix icon or suffix</td></tr>
+                <tr><td>.inp-group</td><td>div</td><td>Attached input + button</td></tr>
+                <tr><td>.toggle</td><td>label</td><td>Animated on/off toggle</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-card-head"><i class="ti ti-bell"></i> Toast</div>
+          <div class="doc-card-body">
+            <div class="code-block"><span class="kw">fireToast</span>(type, title, message, duration?)
+
+type     : <span class="str">'success'</span> | <span class="str">'danger'</span> | <span class="str">'warning'</span> | <span class="str">'info'</span>
+title    : string
+message  : string
+duration : number  <span class="cm">// ms, default 4000</span></div>
+          </div>
+        </div>
+
+        <div class="doc-card">
+          <div class="doc-card-head"><i class="ti ti-activity"></i> Real-time / WebSocket</div>
+          <div class="doc-card-body">
+            <div class="code-block"><span class="cm">// Simulated WebSocket engine
+// Auto-reconnect on disconnect
+// Emits events every ~2.8s
+// Metrics refresh every 5s (no page reload)</span>
+
+<span class="kw">wsToggle</span>()        <span class="cm">// connect / disconnect</span>
+<span class="kw">clearNotifs</span>()     <span class="cm">// clear notification list</span>
+<span class="kw">clearLog</span>()        <span class="cm">// clear activity log</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── REALTIME PANEL ─── -->
+      <section class="panel" id="panel-realtime">
+        <div class="page-header">
+          <div class="page-title">Live Panel</div>
+          <div class="page-desc">Simulated WebSocket connection with live notifications, metrics, and auto-refresh — no page reload.</div>
+        </div>
+
+        <!-- WS Status bar -->
+        <div class="ws-bar">
+          <div class="ws-info">
+            <div class="ws-dot" id="ws-dot"></div>
+            <div>
+              <div class="ws-name" id="ws-name">Connecting…</div>
+              <div class="ws-url">ws://localhost:8080/live-events</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <span style="font-size:12px;color:var(--ink3);font-family:var(--mono)" id="ws-msg-count">0 messages</span>
+            <button class="btn btn-sm" onclick="wsToggle()" id="ws-toggle-btn">
+              <i class="ti ti-power" id="ws-toggle-icon"></i> <span id="ws-toggle-label">Disconnect</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Metrics -->
+        <div class="metrics-row">
+          <div class="metric-card">
+            <div class="metric-label"><i class="ti ti-users"></i> Active users</div>
+            <div class="metric-value" id="m-users">—</div>
+            <div class="metric-delta" id="m-users-d"></div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label"><i class="ti ti-bolt"></i> Events / sec</div>
+            <div class="metric-value" id="m-eps">—</div>
+            <div class="metric-delta" id="m-eps-d"></div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label"><i class="ti ti-antenna"></i> Latency (ms)</div>
+            <div class="metric-value" id="m-lat">—</div>
+            <div class="metric-delta" id="m-lat-d"></div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label"><i class="ti ti-server"></i> Uptime</div>
+            <div class="metric-value" id="m-uptime">—</div>
+            <div class="metric-delta up" id="m-uptime-d"></div>
+          </div>
+        </div>
+
+        <!-- Auto-refresh indicator -->
+        <div class="refresh-container">
+          <div class="refresh-label">
+            <span><i class="ti ti-refresh" style="font-size:13px"></i> Auto-refreshing metrics every 5s</span>
+            <span id="refresh-countdown" style="font-family:var(--mono);font-size:11px;color:var(--ink3)">5s</span>
+          </div>
+          <div class="refresh-track"><div class="refresh-fill" id="rf-fill"></div></div>
+        </div>
+
+        <div class="rt-grid">
+          <!-- Notifications -->
+          <div>
+            <div style="font-size:12.5px;font-weight:500;color:var(--ink2);margin-bottom:8px;display:flex;align-items:center;justify-content:space-between">
+              <span>Live notifications</span>
+              <button class="btn btn-sm btn-ghost" onclick="clearNotifs()" style="font-size:11px;height:24px;padding:0 8px">
+                <i class="ti ti-trash"></i> Clear
+              </button>
+            </div>
+            <div class="notif-panel">
+              <div class="notif-header">
+                <div class="notif-header-left">
+                  <i class="ti ti-bell" style="font-size:15px;color:var(--accent)"></i>
+                  Inbox
+                </div>
+                <span class="notif-count" id="notif-count">0</span>
+              </div>
+              <div class="notif-list" id="notif-list">
+                <div class="notif-empty"><i class="ti ti-hourglass" style="font-size:22px;display:block;margin:0 auto 8px"></i>Waiting for events…</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Activity Log -->
+          <div>
+            <div style="font-size:12.5px;font-weight:500;color:var(--ink2);margin-bottom:8px;display:flex;align-items:center;justify-content:space-between">
+              <span>Activity log</span>
+              <button class="btn btn-sm btn-ghost" onclick="clearLog()" style="font-size:11px;height:24px;padding:0 8px">
+                <i class="ti ti-trash"></i> Clear
+              </button>
+            </div>
+            <div class="log-panel">
+              <div class="log-header">
+                <i class="ti ti-list-details" style="font-size:15px;color:var(--accent)"></i>
+                Real-time log
+              </div>
+              <div class="log-list" id="activity-log">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+<script src="advance.js"></script>
+
+</body>
+</html>
