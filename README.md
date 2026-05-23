@@ -25,3 +25,11 @@ Smooth Transitions
 Framer Motion Animations
 Reusable Components
 Modern Responsive UI
+
+🚀 AdminX Pro — Dashboard & Multi-Step Form(intermediate)
+
+AdminX Pro is a modern and responsive admin dashboard built using HTML, CSS, JavaScript, Bootstrap 5, and Chart.js. It includes a fully functional sidebar navigation system, analytics charts, paginated data tables, notification panels, user management, and dark/light mode support with customizable accent colors. The dashboard is optimized for desktop, tablet, and mobile devices.
+
+The project also features an advanced multi-step form with smooth step navigation, real-time validation, progress indicators, and localStorage integration to automatically save user progress. Users can continue filling the form even after refreshing the page, making the experience more user-friendly and reliable.
+
+This project demonstrates intermediate-level frontend development concepts including responsive layouts, dynamic UI interactions, chart visualization, theme management, pagination, form validation, and browser storage handling.
