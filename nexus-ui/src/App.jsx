@@ -12,13 +12,13 @@ const G = {
     bg: "#0A0A0F",
     surface: "#111118",
     surfaceHigh: "#1A1A26",
-    accent: "#7C3AED",
-    accentGlow: "#9F67FF",
-    accentSoft: "rgba(124,58,237,0.15)",
-    gold: "#F5C842",
+    accent: "#E7AD99",
+    accentGlow: "#ECC8AF",
+    accentSoft: "rgba(231,173,153,0.15)",
+    gold: "#ECC8AF",
     text: "#F0EEF8",
     textMuted: "#8B87A8",
-    border: "rgba(124,58,237,0.2)",
+    border: "rgba(231,173,153,0.2)",
   },
 };
 
@@ -142,7 +142,7 @@ const Navbar = ({ onOpenSidebar }) => {
           whileTap={{ scale: 0.97 }}
           style={{
             background: `linear-gradient(135deg, ${G.color.accent}, ${G.color.accentGlow})`,
-            color: "#fff", borderRadius: 8, padding: "7px 18px",
+            color: "#1A0F0A", borderRadius: 8, padding: "7px 18px",
             fontSize: "0.8rem", fontWeight: 600,
           }}
         >
@@ -172,7 +172,7 @@ const Hero = ({ onOpenModal }) => {
               position: "absolute",
               width: 400 + i * 80, height: 400 + i * 80,
               borderRadius: "50%",
-              background: `radial-gradient(circle, ${i % 2 === 0 ? G.color.accent : "#1E1B4B"}44 0%, transparent 70%)`,
+              background: `radial-gradient(circle, ${i % 2 === 0 ? G.color.accent : "#4B2E24"}44 0%, transparent 70%)`,
               left: `${[10, 60, 30, 70, 5, 80][i]}%`,
               top: `${[20, 10, 60, 40, 70, 30][i]}%`,
               transform: "translate(-50%,-50%)",
@@ -216,7 +216,7 @@ const Hero = ({ onOpenModal }) => {
         >
           Build{" "}
           <span style={{
-            background: `linear-gradient(135deg, ${G.color.accentGlow}, ${G.color.gold})`,
+            background: `linear-gradient(135deg, ${G.color.accentGlow}, ${G.color.accent})`,
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
           }}>
             Stunning
@@ -247,7 +247,7 @@ const Hero = ({ onOpenModal }) => {
             whileTap={{ scale: 0.97 }}
             style={{
               background: `linear-gradient(135deg, ${G.color.accent}, ${G.color.accentGlow})`,
-              color: "#fff", borderRadius: 12, padding: "14px 32px",
+              color: "#1A0F0A", borderRadius: 12, padding: "14px 32px",
               fontSize: "1rem", fontWeight: 600, fontFamily: G.font.body,
             }}
           >
@@ -389,7 +389,7 @@ const Testimonials = () => (
                   width: 42, height: 42, borderRadius: "50%",
                   background: `linear-gradient(135deg, ${G.color.accent}, ${G.color.accentGlow})`,
                   display: "flex", alignItems: "center", justifyContent: "center",
-                  fontFamily: G.font.display, fontWeight: 700, fontSize: "0.85rem",
+                  fontFamily: G.font.display, fontWeight: 700, fontSize: "0.85rem", color: "#1A0F0A",
                 }}>{t.avatar}</div>
                 <div>
                   <div style={{ fontWeight: 600, fontSize: "0.9rem" }}>{t.name}</div>
@@ -564,7 +564,7 @@ const Modal = ({ open, onClose }) => (
               onClick={onClose}
               style={{
                 flex: 1, background: `linear-gradient(135deg, ${G.color.accent}, ${G.color.accentGlow})`,
-                color: "#fff", borderRadius: 10, padding: "11px",
+                color: "#1A0F0A", borderRadius: 10, padding: "11px",
                 fontSize: "0.9rem", fontWeight: 600, fontFamily: G.font.body,
               }}
             >
@@ -665,7 +665,7 @@ const Sidebar = ({ open, onClose }) => (
             whileHover={{ scale: 1.04, boxShadow: `0 0 20px ${G.color.accent}60` }}
             style={{
               background: `linear-gradient(135deg, ${G.color.accent}, ${G.color.accentGlow})`,
-              color: "#fff", borderRadius: 12, padding: "13px",
+              color: "#1A0F0A", borderRadius: 12, padding: "13px",
               fontSize: "0.9rem", fontWeight: 600, fontFamily: G.font.body,
             }}
           >
